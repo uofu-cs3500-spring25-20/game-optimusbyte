@@ -66,7 +66,8 @@ public sealed class NetworkConnection : IDisposable
         get
         {
             // TODO: implement this
-            throw new NotImplementedException();
+            // This is a property
+            return _tcpClient.Connected;
         }
     }
 
@@ -79,7 +80,8 @@ public sealed class NetworkConnection : IDisposable
     public void Connect( string host, int port )
     {
         // TODO: implement this
-        throw new NotImplementedException();
+        _tcpClient.Connect( host, port );
+        
     }
 
 
@@ -94,8 +96,11 @@ public sealed class NetworkConnection : IDisposable
     /// <param name="message"> The string of characters to send. </param>
     public void Send( string message )
     {
-        // TODO: Implement this
-        throw new NotImplementedException();
+        if (IsConnected)
+        {
+            _writer.WriteLine(message);
+        }
+        throw new InvalidOperationException();
     }
 
 
@@ -108,9 +113,11 @@ public sealed class NetworkConnection : IDisposable
     /// <returns> The contents of the message. </returns>
     public string ReadLine( )
     {
-        // TODO: implement this
-        throw new NotImplementedException();
-
+        if (IsConnected)
+        {
+            return _reader.ReadLine();
+        }
+        throw new InvalidOperationException();
     }
 
     /// <summary>
@@ -120,6 +127,7 @@ public sealed class NetworkConnection : IDisposable
     public void Disconnect( )
     {
         //TODO: implement this
+        // Dont worry yet
         throw new NotImplementedException();
     }
 
